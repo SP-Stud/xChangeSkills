@@ -1,44 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="{% static 'styles\loginStyle.css'%}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="{% static 'js\script.js'%}"></script>
-
-</head>
-<body>
-<header style="width: 100%; position: fixed;">
-<div class="header" style="width:'100px';">
-<img src="{% static 'images/Skill_logo.png'%}" alt="logo" />
-<h1>xchangeSkills</h1>
-</div>
-
-<ul>
-  <li><a class="active" href="{% url 'index' %}">Home</a></li>
-  <li><a href="{% url 'news' %}">News</a></li>
-  <li><a href="#contact" id="showContact">Contact</a></li>
-  <li><a href="{% url 'about' %}">About</a></li>
-</ul>
-
-</header>
-
-<section class="about-us">
-	<div style="margin-top: 5%; display: flex; justify-content: space-between;">
-		<div style="flex-basis: 48%; padding: 90px 30px;">
-			<h1>Skills exchange are a great way to get jobs done while making friends and saving cash.</h1>
-			<p>Joining a skills exchange means you can swap a few hours of your time – doing something you’re good at - for services you would otherwise have to pay hundreds of pounds a year for.</p>
+{% block content %}
+	<section class="about-us">
+		<div style="margin-top: 5%; display: flex; justify-content: space-between;">
+			<div style="flex-basis: 48%; padding: 90px 30px;">
+				<h1>Skills exchange are a great way to get jobs done while making friends and saving cash.</h1>
+				<p>Joining a skills exchange means you can swap a few hours of your time – doing something you’re good at - for services you would otherwise have to pay hundreds of pounds a year for.</p>
+			</div>
+			<div style="flex-basis: 48%; padding: 30px 2px;">
+				<img src="{% static '/images/exchange-your-skills.jpg' %}">
+			</div>
 		</div>
-		<div style="flex-basis: 48%; padding: 30px 2px;">
-			<img src="{% static 'images/exchange-your-skills.jpg' %}">
-		</div>
-	</div>
-	
-</section>
-    
-<!-- ----Footer -------------->
-<footer>
-	<p>
-		@ 2021 All Rights Reserved
-	</p>
-</footer>
+		
+	</section>
+{% endblock content %}

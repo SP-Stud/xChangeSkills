@@ -1,44 +1,17 @@
+
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="{% static 'styles\loginStyle.css'%}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="{% static 'js\script.js'%}"></script>
-
-</head>
-<body>
-<header style="width: 100%; position: fixed;">
-<div class="header" style="width:'100px';">
-<img src="{% static 'images/Skill_logo.png'%}" alt="logo" />
-<h1>xchangeSkills</h1>
-</div>
-
-<ul>
-  <li><a class="active" href="{% url 'index' %}">Home</a></li>
-  <li><a href="{% url 'news' %}">News</a></li>
-  <li><a href="#contact" id="showContact">Contact</a></li>
-  <li><a href="{% url 'about' %}">About</a></li>
-</ul>
-
-</header>
-
-<section class="news">
-	<div style="margin-top: 5%; display: flex; justify-content: space-between;">
-		<div style="flex-basis: 48%; padding: 90px 30px;">
-			<h1>XchangeSkill</h1>
-			<p>Bring people together into a group. Each member of the group has certain skills and services they can offer, and each one has needs they hope can be met by other members.</p>
-			<p>The modern version usually works on a time basis, so that one hour of everyone’s time is worth exactly the same amount.</p>
+{% block content %}
+	<section class="news">
+		<div style="margin-top: 5%; display: flex; justify-content: space-between;">
+			<div style="flex-basis: 48%; padding: 90px 30px;">
+				<h1>XchangeSkill</h1>
+				<p>Bring people together into a group. Each member of the group has certain skills and services they can offer, and each one has needs they hope can be met by other members.</p>
+				<p>The modern version usually works on a time basis, so that one hour of everyone’s time is worth exactly the same amount.</p>
+			</div>
+			<div style="flex-basis: 48%; padding: 30px 2px;">
+				<img src="{% static '/images/xchange-news.png' %}">
+			</div>
 		</div>
-		<div style="flex-basis: 48%; padding: 30px 2px;">
-			<img src="{% static 'images/xchange-news.png' %}">
-		</div>
-	</div>
-</section>
-    
-<!-- ----Footer -------------->
-<footer>
-	<p>
-		@ 2021 All Rights Reserved
-	</p>
-</footer>
+	</section>
+{% endblock content %}

@@ -2,13 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
+import datetime
 
 class User(AbstractUser):
     mid_name = models.CharField(max_length=20)
-    dob = models.DateField()
-    phone = models.IntegerField()
+    dob = models.DateField(default=datetime.date.today)
+    phone = models.IntegerField(null=True)
     gender = models.CharField(max_length=1)
-    
+
 class Address(models.Model):
     street_address = models.CharField(max_length=50)
     country = models.CharField(max_length=20)

@@ -16,13 +16,25 @@
             <h1>xchangeSkills</h1>
         </div>
 
-        <ul>
-            <li><a class="active" href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'news' %}">News</a></li>
-            <li><a href="#contact" id="showContact">Contact</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-        </ul>
+        <div style="float: left">
+            <ul>
+                <li><a class="active" href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'news' %}">News</a></li>
+                <li><a href="#contact" id="showContact">Contact</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+        </div>
 
+        <div style="float: right">
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a class="active" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a class="active" href="{% url 'index' %}">Login</a></li>
+                    <li><a href="{% url 'index' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </header>
 
     {% block content %} {% endblock %}

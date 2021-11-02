@@ -5,10 +5,14 @@ from django.contrib.auth.models import User
 import datetime
 
 class User(AbstractUser):
+    email=models.EmailField(('email'), unique=True)
     mid_name = models.CharField(max_length=20)
     dob = models.DateField(default=datetime.date.today)
     phone = models.IntegerField(null=True)
     gender = models.CharField(max_length=1)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 class Address(models.Model):
     street_address = models.CharField(max_length=50)

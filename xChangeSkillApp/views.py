@@ -1,17 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .models import Address
-from .models import User
+from django.contrib.auth.decorators import login_required
+from .models import Address, User
+from .forms import UserRegisterForm, UserUpdateForm
 
 def index(request):
     return render(request, "index.html")
 
+
 def about(request):
     return render(request,"about.html")
 
+
 def news(request):
     return render(request,"news.html")
+
 
 def loginSystem(request):
     if request.method=='POST':
@@ -22,17 +26,19 @@ def loginSystem(request):
             print(user.is_authenticated, request.user.is_authenticated)
             login(request, user)
             print(user.is_authenticated, request.user.is_authenticated)
-            return redirect("index")  
+            return redirect('skillList') 
 
             # return render(request, "userprofile.html")
         else:
             print("user fail")
             messages.add_message(request, messages.INFO, 'Wrong credentials please try again')
-            return render(request,"index.html")              
+            return redirect('index')           
+
 
 def logout(request):
     logout(request, user)
     return redirect("index.html")
+
 
 def register(request):
     print("register here")
@@ -62,3 +68,31 @@ def register(request):
             print('password not matching..')
 
         return redirect('index')
+
+
+def skillList(request):
+    return render(request,"skillList.html")
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
+
+        if u_form.is_valid():
+            u_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profile')
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+    
+
+    context = {
+        'u_form':u_form
+    }
+
+    return render(request, 'profile.html', context)
+
+def userSkillPage(request):
+    return render(request, "userSkillPage.html")

@@ -10,6 +10,7 @@ class User(AbstractUser):
     dob = models.DateField(default=datetime.date.today)
     phone = models.IntegerField(null=True)
     gender = models.CharField(max_length=1)
+    image = models.ImageField(default='default.png', upload_to='profile_pics')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -31,3 +32,10 @@ class Address(models.Model):
         self.user = user
         return self
 
+class SkillList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    skill = models.CharField(max_length=50)
+
+class SkillWishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    skill = models.CharField(max_length=50)

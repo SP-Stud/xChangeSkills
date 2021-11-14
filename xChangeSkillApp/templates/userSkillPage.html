@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Skill List Page</h1>
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+    <h3>User Skill List:</h3>
+    <div style="float:left">
+        <ul id="dynamic-list"></ul>
+
+        <input type="text" id="candidate"/>
+        <button onclick="addItem(true)">add item</button>
+        <button onclick="removeItem(true)">remove item</button>
+    </div>
+    <br>
+    <h3>User Skill Wish List:</h3>
+    <div style="float:left">
+        <ul id="dynamic-list2"></ul>
+
+        <input type="text" id="candidate2"/>
+        <button onclick="addItem(false)">add item</button>
+        <button onclick="removeItem(false)">remove item</button>
+    </div>
+
+    <script>
+        function addItem(flag){
+            if(flag) {
+                var ul = document.getElementById("dynamic-list");
+                var candidate = document.getElementById("candidate");
+            } else {
+                var ul = document.getElementById("dynamic-list2");
+                var candidate = document.getElementById("candidate2");
+            }
+            
+            var li = document.createElement("li");
+            li.setAttribute('id',candidate.value);
+            li.setAttribute('class', "skillItems")
+            li.appendChild(document.createTextNode(candidate.value));
+            ul.appendChild(li);
+        }
+
+        function removeItem(flag){
+            if(flag) {
+                var ul = document.getElementById("dynamic-list");
+                var candidate = document.getElementById("candidate");
+            } else {
+                var ul = document.getElementById("dynamic-list2");
+                var candidate = document.getElementById("candidate2");
+            }
+            var item = document.getElementById(candidate.value);
+            ul.removeChild(item);
+        }
+    </script>
+    
+{% endblock %}

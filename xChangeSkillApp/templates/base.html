@@ -4,8 +4,10 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'styles\loginStyle.css'%}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js\script.js'%}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
 
 </head>
 
@@ -13,25 +15,26 @@
     <header style="width: 100%; position: fixed;">
         <div class="header" style="width:'100px';">
             <img src="{% static 'images/Skill_logo.png'%}" alt="logo" />
-            <h1>xchangeSkills</h1>
         </div>
 
         <div style="float: left">
-            <ul>
-                <li><a class="active" href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'news' %}">News</a></li>
-                <li><a href="#contact" id="showContact">Contact</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
+            <ul class="navbar">
+                <li class="navbarItems"><a class="active" href="{% url 'index' %}">Home</a></li>
+                <li class="navbarItems"><a href="{% url 'news' %}">News</a></li>
+                <li class="navbarItems"><a href="#contact" id="showContact">Contact</a></li>
+                <li class="navbarItems"><a href="{% url 'about' %}">About</a></li>
             </ul>
         </div>
 
         <div style="float: right">
-            <ul>
+            <ul class="navbar">
                 {% if user.is_authenticated %}
-                    <li><a class="active" href="{% url 'logout' %}">Logout</a></li>
+                    <li class="navbarItems"><a class="active" href="{% url 'userSkillPage' %}">User Skills</a></li>
+                    <li class="navbarItems"><a class="active" href="{% url 'profile' %}">Profile</a></li>
+                    <li class="navbarItems"><a class="active" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                    <li><a class="active" href="{% url 'index' %}">Login</a></li>
-                    <li><a href="{% url 'index' %}">Register</a></li>
+                    <li class="navbarItems"><a class="active" href="{% url 'index' %}">Login</a></li>
+                    <li class="navbarItems"><a href="{% url 'index' %}">Register</a></li>
                 {% endif %}
             </ul>
         </div>

@@ -15,7 +15,12 @@ urlpatterns = [
     path("userSkillPage", views.userSkillPage, name='userSkillPage'),
     path('skillList', views.skillList, name='skillList'),
 
-    
+    path('userSkillPage/postSkill', views.postSkill, name='post-skill'),
+    path('userSkillPage/postWishSkill', views.postWishSkill, name='post-wish-skill'),
+    path('userSkillPage/deleteSkill', views.deleteSkill, name='delete-skill'),
+    path('userSkillPage/deleteWishSkill', views.deleteWishSkill, name='delete-wish-skill'),
+
+
 ]
 
 if settings.DEBUG:

@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Address, User
+from .models import Address, User, SkillList, SkillWishList
 from .forms import UserRegisterForm, UserUpdateForm
+import json
+from django.http import HttpResponse, JsonResponse
 
 def index(request):
     return render(request, "index.html")
@@ -95,4 +97,53 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 def userSkillPage(request):
-    return render(request, "userSkillPage.html")
+    current_user = request.user
+    context = {
+        'skillList' : SkillList.objects.all().filter(user=current_user),
+        'skillWishList' : SkillWishList.objects.all().filter(user=current_user)
+    }
+    # print(skillList)
+    return render(request, "userSkillPage.html", context)
+
+
+def postSkill(request):
+    if request.method == 'POST':
+        current_user = request.user
+        skills = json.loads(request.body.decode('UTF-8'))
+        print(skills['skill'])
+        skillList = SkillList(user=current_user , skill=skills['skill'])
+        skillList.save()
+        # return JsonResponse({''}, status=200)
+        data = {'status':'Received JSON successfully'}
+        return HttpResponse(json.dumps(data), content_type="application/json")
+    
+def postWishSkill(request):
+    if request.method == 'POST':
+        current_user = request.user
+        skills = json.loads(request.body.decode('UTF-8'))
+        skillWishList = SkillWishList(user=current_user , skill=skills['skill'])
+        skillWishList.save()
+        # return JsonResponse({''}, status=200)
+        data = {'status':'Received JSON successfully'}
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+def deleteSkill(request):
+    if request.method == 'DELETE':
+        current_user = request.user
+        skills = json.loads(request.body.decode('UTF-8'))
+        skillList = SkillList.objects.all().filter(user=current_user, skill=skills['skill'])
+        skillList.delete()
+
+        data = {'status':'Received JSON successfully'}
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+    
+def deleteWishSkill(request):
+    if request.method == 'DELETE':
+        current_user = request.user
+        skills = json.loads(request.body.decode('UTF-8'))
+        skillWishList = SkillWishList.objects.get(user=current_user, skill=skills['skill'])
+        skillWishList.delete()
+
+        data = {'status':'Received JSON successfully'}
+        return HttpResponse(json.dumps(data), content_type="application/json")

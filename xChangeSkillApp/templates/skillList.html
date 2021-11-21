@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-
+<div class="content-section" style=" margin-top:150px;margin-bottom:50px;overflow: scroll; ">
     <h1>Skill List Page</h1>
     <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
 
@@ -18,7 +19,7 @@
           </div>
         </article>
     {% endfor %}
-    
+</div> 
     <script>
         const autoCompleteJS = new autoComplete({
             selector: "#autoComplete",

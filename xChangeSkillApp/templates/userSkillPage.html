@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<div class="content-section" style=" margin-top:150px;margin-bottom:50px;overflow: scroll; ">
     <h1>Skill List Page</h1>
     <div class="media">
         <div class="media-body">
@@ -9,7 +9,7 @@
         </div>
     </div>
     <h3>User Skill List:</h3>
-    <div style="float:left">
+    <div >
         <ul id="dynamic-list">
             {% for x in skillList %}
                 <li id="{{ x.skill }}" class="skillItems">{{ x.skill }}</li>
@@ -21,7 +21,7 @@
     </div>
     <br>
     <h3>User Skill Wish List:</h3>
-    <div style="float:left">
+    <div >
         <ul id="dynamic-list2">
             {% for x in skillWishList %}
                 <li id="{{ x.skill }}" class="skillItems">{{ x.skill }}</li>
@@ -31,7 +31,7 @@
         <button id="addItemButton2" onclick="addItem(0)">add item</button>
         <button id="removeItemButton2" onclick="removeItem(0)">remove item</button>
     </div>
-
+</div>
     <script>
         // document.getElementById("addItemButton").addEventListener("click", addItem(1));
         // document.getElementById("removeItemButton").addEventListener("click", removeItem(1));

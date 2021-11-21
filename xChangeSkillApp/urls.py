@@ -20,7 +20,6 @@ urlpatterns = [
     path('userSkillPage/deleteSkill', views.deleteSkill, name='delete-skill'),
     path('userSkillPage/deleteWishSkill', views.deleteWishSkill, name='delete-wish-skill'),
 
-
 ]
 
 if settings.DEBUG:

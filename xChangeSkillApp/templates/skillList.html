@@ -2,11 +2,18 @@
 {% block content %}
 
     <h1>Skill List Page</h1>
-    <div class="media">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.email }}</p>
-        </div>
-    </div>
+
+    {% for skill in allSkills %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ skill.user.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ skill.user.first_name}} {{ skill.user.last_name  }}</a>
+            </div>
+            <h2><a class="article-title" >{{ skill.skill }}</a></h2>
+            <p class="article-content">{{ skill.skill }}</p>
+          </div>
+        </article>
+    {% endfor %}
     
 {% endblock %}

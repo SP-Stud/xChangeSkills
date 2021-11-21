@@ -36,7 +36,7 @@ def loginSystem(request):
             messages.add_message(request, messages.INFO, 'Wrong credentials please try again')
             return redirect('index')           
 
-
+@login_required
 def logout(request):
     logout(request, user)
     return redirect("index.html")
@@ -71,9 +71,32 @@ def register(request):
 
         return redirect('index')
 
-
+@login_required
 def skillList(request):
-    return render(request,"skillList.html")
+    current_user = request.user
+    allSkills = SkillList.objects.all().exclude(user=current_user)
+
+    context = {
+        'allSkills' : allSkills
+    }
+    
+    return render(request,"skillList.html", context)
+
+    # all_users = User.objects.all()
+    # userListWithSkills = []
+
+    # for user in all_users:
+    #     skillList = SkillList.objects.all().filter(user=current_user)
+    #     skillWishList = SkillWishList.objects.all().filter(user=current_user)
+
+    #     pair = (user, skillList,skillWishList)
+    #     userListWithSkillsuserListWithSkills.append(pair)
+
+    # context = {
+    #     'userListWithSkills' : userListWithSkills
+    # }
+    
+    # return render(request,"skillList.html", context)
 
 
 @login_required
@@ -96,6 +119,7 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 
+@login_required
 def userSkillPage(request):
     current_user = request.user
     context = {
@@ -105,7 +129,7 @@ def userSkillPage(request):
     # print(skillList)
     return render(request, "userSkillPage.html", context)
 
-
+@login_required
 def postSkill(request):
     if request.method == 'POST':
         current_user = request.user
@@ -116,7 +140,8 @@ def postSkill(request):
         # return JsonResponse({''}, status=200)
         data = {'status':'Received JSON successfully'}
         return HttpResponse(json.dumps(data), content_type="application/json")
-    
+
+@login_required
 def postWishSkill(request):
     if request.method == 'POST':
         current_user = request.user
@@ -127,6 +152,7 @@ def postWishSkill(request):
         data = {'status':'Received JSON successfully'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
+@login_required
 def deleteSkill(request):
     if request.method == 'DELETE':
         current_user = request.user
@@ -137,7 +163,7 @@ def deleteSkill(request):
         data = {'status':'Received JSON successfully'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
-    
+@login_required
 def deleteWishSkill(request):
     if request.method == 'DELETE':
         current_user = request.user

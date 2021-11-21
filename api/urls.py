@@ -7,7 +7,8 @@ urlpatterns = [
     path('user-detail/<str:pk>', views.userDetail, name="user-detail"),
 
     path('skill-list/', views.skillListApi, name="skill-list"),
-    path('skill-list/<str:pk>', views.SkillListUser, name="skill-list-user")
+    path('skill-list/<str:pk>', views.SkillListUser, name="skill-list-user"),
 
+    path('search-skill/', views.searchSkill, name="search-skill"),
 
 ]

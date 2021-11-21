@@ -15,3 +15,8 @@ class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = SkillList
         fields = '__all__'
+
+class SearchSkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SkillList
+        fields = ('skill',)

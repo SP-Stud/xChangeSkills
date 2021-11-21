@@ -3,7 +3,7 @@ from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, SkillSerializer
+from .serializers import UserSerializer, SkillSerializer, SearchSkillSerializer
 
 from xChangeSkillApp.models import User, SkillList
 
@@ -13,7 +13,8 @@ def apiOverview(request):
         'Skill List' : '/skill-list/',
         'Skill List of User' : '/skill-list/<str:pk>/',
         'User List' : '/user-list/',
-        'User Detail' : '/user-detail/<str:pk>/'
+        'User Detail' : '/user-detail/<str:pk>/',
+        'Search Skill' : '/search-skill/'
     }
     return Response(api_urls)
 
@@ -39,4 +40,12 @@ def skillListApi(request):
 def SkillListUser(request, pk):
     skills = SkillList.objects.filter(user_id=pk)
     serializer = SkillSerializer(skills, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def searchSkill(request):
+    current_user = request.user
+    skills = SkillList.objects.all().exclude(user=current_user)
+    
+    serializer = SearchSkillSerializer(skills, many=True)
     return Response(serializer.data)

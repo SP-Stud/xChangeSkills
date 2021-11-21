@@ -10,6 +10,8 @@ from django.http import HttpResponse, JsonResponse
 def index(request):
     return render(request, "index.html")
 
+def index2(request):
+    return render(request, "base2.html")
 
 def about(request):
     return render(request,"about.html")
@@ -74,7 +76,13 @@ def register(request):
 @login_required
 def skillList(request):
     current_user = request.user
-    allSkills = SkillList.objects.all().exclude(user=current_user)
+    filterSkill = request.GET.get('filterSkill', None)
+
+    if filterSkill:
+        filterSkill = request.GET['filterSkill']
+        allSkills = SkillList.objects.filter(skill=filterSkill).exclude(user=current_user)
+    else:
+        allSkills = SkillList.objects.all().exclude(user=current_user)
 
     context = {
         'allSkills' : allSkills

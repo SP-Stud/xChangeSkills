@@ -75,11 +75,11 @@
 	</div>
 
 </div>
-<div class="register-popup" id="register" style="margin-top: 90px;">
+<div class="register-popup" id="register" style="margin-top: 5px;">
 	<div class="joinus-popup-content">
 		<div class="join-us-container">
 			<div class="join-us-content">
-				<form id="regForm" method="POST" action="register" onsubmit="regValidation()">
+				<form id="regForm" method="POST" action="register" onsubmit="return regValidation()">
 					{% csrf_token %}
 					<div class="reg-user-details">
 						<div class="input-box">
@@ -199,7 +199,7 @@
 							<th>Skills Wish To Learn:</th>
 						</tr>
 						<tr>
-							<td><button class="Add" id="Add1" onClick="addNewSkill()">Add</button>&nbsp;&nbsp;
+							<td><button class="Add" id="Add1" onClick="return addNewSkill()">Add</button>&nbsp;&nbsp;
 								<button class="Add" id="Remove1">Remove</button>
 							</td>
 							<td><button class="Add" id="Add2" onClick="addNewWishSkill()">Add</button>

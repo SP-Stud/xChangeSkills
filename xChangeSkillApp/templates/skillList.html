@@ -1,149 +1,226 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% load static %}
 <div class="content-section" style=" margin-top:150px;margin-bottom:50px;overflow: scroll; ">
     <h1>Skill List Page</h1>
-    <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+    <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off"
+        autocapitalize="off">
 
     <br><br>
+    <!-- Section: Personal card -->
+   
+<section class="my-5">
 
-    {% for skill in allSkills %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ skill.user.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ skill.user.first_name}} {{ skill.user.last_name  }}</a>
-            </div>
-            <h2><a class="article-title" >{{ skill.skill }}</a></h2>
-            <p class="article-content">{{ skill.skill }}</p>
+    <!-- Grid row -->
+    <div class="row">
+        {% for skill in allSkills %}
+      <!-- Grid column -->
+      <div class="col-md-6 col-lg-4">
+  
+        <!-- Card -->
+        <div class="card card-personal">
+  
+          <!-- Card image-->
+          <img class="card-img-top" src="{% static '/images/photocard.png' %}" alt="Card image cap">
+          <!-- Card image-->
+  
+          <!-- Card content -->
+          <div class="card-body">
+            <!-- Title-->
+            <a>
+              <h1 class="card-title title-one">{{ skill.skill }}</h1>
+            </a>
+           <!-- {% for skill.user in allSkills %}
+            <p class="card-meta">{{ skill.user.last_name  }}</p>
+            {% endfor %}-->
+            <!-- Text -->
+            <a class="mr-2" href="#">
+            <p class="card-text">{{ skill.user.first_name  }} {{ skill.user.last_name  }}</p>
+            </a>
           </div>
-        </article>
-    {% endfor %}
-</div> 
-    <script>
-        const autoCompleteJS = new autoComplete({
-            selector: "#autoComplete",
-            placeHolder: "Search for Skill...",
-            data: {
-                src: async () => {
-                        try {
-                            // Loading placeholder text
-                            document
-                            .getElementById("autoComplete")
-                            .setAttribute("placeholder", "Loading...");
-                            // Fetch External Data Source
-                            const source = await fetch(
-                                "{% url 'search-skill' %}"
-                            );
-                            const data = await source.json();
-                            console.log(data);
-                            // Post Loading placeholder text
-                            document
-                            .getElementById("autoComplete")
-                            .setAttribute("placeholder", autoCompleteJS.placeHolder);
-                            // Returns Fetched data
-                            return data;
-                        } catch (error) {
-                            return error;
-                        }
-                    },
-                keys: ["skill"],
-                cache: true,
+          <!-- Card content -->
+  
+        </div>
+        <!-- Card -->
+  
+      </div>
+      <!-- Grid column -->
+      {% endfor %}
+  
+    </div>
+    <!-- Grid row -->
+  
+  </section>
+   
+  <!-- Section: Personal card -->
+   <!-- <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 5%;">Profile Pic</th>
+                <th scope="col" style="width: 10%;">First Name</th>
+                <th scope="col" style="width: 10%;">Last Name</th>
+                <th scope="col" style="width: 20%;">Skills List</th>
+                <th scope="col" style="width: 20%;">Email</th>
+                <th scope="col" style="width: 20%;">Contact Number</th>
+                <th scope="col" style="width: 20%;">Gender</th>
+            </tr>
+        </thead>
+        <tbody> 
+            <tr>
+                <article class="media content-section">
+                    <td style="width: 5%;"><img class="rounded-circle article-img" src="{{ skill.user.image.url }}"> </td>
+
+                    <div class="media-body">
+                        <td style="width: 10%;">
+                            <div class="article-metadata">
+                                <a class="mr-2" href="#">{{ skill.user.first_name}}</a>
+                            </div>
+                        </td>
+                        <td style="width: 10%;">
+                            <div class="article-metadata">
+                                <a class="mr-2" href="#">{{ skill.user.last_name  }}</a>
+                            </div>
+                        </td>
+                        <td style="width: 20%;">
+                            <h2><a class="article-title">{{ skill.skill }}</a></h2>
+                        </td>
+                        <td style="width: 20%;">
+                            <p class="article-content">{{ skill.user.email }}</p>
+                        </td>
+                        <td style="width: 20%;">
+                            <p class="article-content">{{ skill.user.phone }}</p>
+                        </td>
+                        <td style="width: 10%;">
+                            <p class="article-content">{{ skill.user.gender }}</p>
+                        </td>
+                    </div>
+                </article>
+            </tr>-->
+           
+</div>
+<script>
+    const autoCompleteJS = new autoComplete({
+        selector: "#autoComplete",
+        placeHolder: "Search for Skill...",
+        data: {
+            src: async () => {
+                try {
+                    // Loading placeholder text
+                    document
+                        .getElementById("autoComplete")
+                        .setAttribute("placeholder", "Loading...");
+                    // Fetch External Data Source
+                    const source = await fetch(
+                        "{% url 'search-skill' %}"
+                    );
+                    const data = await source.json();
+                    console.log(data);
+                    // Post Loading placeholder text
+                    document
+                        .getElementById("autoComplete")
+                        .setAttribute("placeholder", autoCompleteJS.placeHolder);
+                    // Returns Fetched data
+                    return data;
+                } catch (error) {
+                    return error;
+                }
             },
-            resultsList: {
-                element: (list, data) => {
-                    if (!data.results.length) {
-                        // Create "No Results" message element
-                        const message = document.createElement("div");
-                        // Add class to the created element
-                        message.setAttribute("class", "no_result");
-                        // Add message text content
-                        message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
-                        // Append message element to the results list
-                        list.prepend(message);
-                    }
-                },
-                noResults: true,
-                maxResults: 10,
+            keys: ["skill"],
+            cache: true,
+        },
+        resultsList: {
+            element: (list, data) => {
+                if (!data.results.length) {
+                    // Create "No Results" message element
+                    const message = document.createElement("div");
+                    // Add class to the created element
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Append message element to the results list
+                    list.prepend(message);
+                }
             },
-            resultItem: {
-                highlight: true
-            },
-            events: {
-                input: {
-                    selection: (event) => {
-                        const selection = event.detail.selection.value;
-                        autoCompleteJS.input.value = selection;
-                    }
+            noResults: true,
+            maxResults: 10,
+        },
+        resultItem: {
+            highlight: true
+        },
+        events: {
+            input: {
+                selection: (event) => {
+                    const selection = event.detail.selection.value;
+                    autoCompleteJS.input.value = selection;
                 }
             }
-        });
+        }
+    });
 
-        autoCompleteJS.input.addEventListener("selection", function (event) {
-            const feedback = event.detail;
-            autoCompleteJS.input.blur();
-            // Prepare User's Selected Value
-            const selection = feedback.selection.value[feedback.selection.key];
+    autoCompleteJS.input.addEventListener("selection", function (event) {
+        const feedback = event.detail;
+        autoCompleteJS.input.blur();
+        // Prepare User's Selected Value
+        const selection = feedback.selection.value[feedback.selection.key];
 
-            console.log("{% url 'skillList' %}?filterSkill="+selection);
-            location.href = "{% url 'skillList' %}?filterSkill="+selection;
-            // // Render selected choice to selection div
-            // document.querySelector(".selection").innerHTML = selection;
-            // // Replace Input value with the selected value
-            // autoCompleteJS.input.value = selection;
-            // // Console log autoComplete data feedback
-            // console.log(feedback);
-        });
+        console.log("{% url 'skillList' %}?filterSkill=" + selection);
+        location.href = "{% url 'skillList' %}?filterSkill=" + selection;
+        // // Render selected choice to selection div
+        // document.querySelector(".selection").innerHTML = selection;
+        // // Replace Input value with the selected value
+        // autoCompleteJS.input.value = selection;
+        // // Console log autoComplete data feedback
+        // console.log(feedback);
+    });
 
-        // Toggle Search Engine Type/Mode
-        document.querySelector(".toggler").addEventListener("click", () => {
-            // Holds the toggle button selection/alignment
-            const toggle = document.querySelector(".toggle").style.justifyContent;
+    // Toggle Search Engine Type/Mode
+    document.querySelector(".toggler").addEventListener("click", () => {
+        // Holds the toggle button selection/alignment
+        const toggle = document.querySelector(".toggle").style.justifyContent;
 
-            if (toggle === "flex-start" || toggle === "") {
-                // Set Search Engine mode to Loose
-                document.querySelector(".toggle").style.justifyContent = "flex-end";
-                document.querySelector(".toggler").innerHTML = "Loose";
-                autoCompleteJS.searchEngine = "loose";
-            } else {
-                // Set Search Engine mode to Strict
-                document.querySelector(".toggle").style.justifyContent = "flex-start";
-                document.querySelector(".toggler").innerHTML = "Strict";
-                autoCompleteJS.searchEngine = "strict";
-            }
-        });
+        if (toggle === "flex-start" || toggle === "") {
+            // Set Search Engine mode to Loose
+            document.querySelector(".toggle").style.justifyContent = "flex-end";
+            document.querySelector(".toggler").innerHTML = "Loose";
+            autoCompleteJS.searchEngine = "loose";
+        } else {
+            // Set Search Engine mode to Strict
+            document.querySelector(".toggle").style.justifyContent = "flex-start";
+            document.querySelector(".toggler").innerHTML = "Strict";
+            autoCompleteJS.searchEngine = "strict";
+        }
+    });
 
-        // Blur/unBlur page elements
-        const action = (action) => {
-            const title = document.querySelector("h1");
-            const mode = document.querySelector(".mode");
-            const selection = document.querySelector(".selection");
-            const footer = document.querySelector(".footer");
+    // Blur/unBlur page elements
+    const action = (action) => {
+        const title = document.querySelector("h1");
+        const mode = document.querySelector(".mode");
+        const selection = document.querySelector(".selection");
+        const footer = document.querySelector(".footer");
 
-            if (action === "dim") {
-                title.style.opacity = 1;
-                mode.style.opacity = 1;
-                selection.style.opacity = 1;
-            } else {
-                title.style.opacity = 0.3;
-                mode.style.opacity = 0.2;
-                selection.style.opacity = 0.1;
-            }
-        };
+        if (action === "dim") {
+            title.style.opacity = 1;
+            mode.style.opacity = 1;
+            selection.style.opacity = 1;
+        } else {
+            title.style.opacity = 0.3;
+            mode.style.opacity = 0.2;
+            selection.style.opacity = 0.1;
+        }
+    };
 
-        // Blur/unBlur page elements on input focus
-        ["focus", "blur"].forEach((eventType) => {
-            autoCompleteJS.input.addEventListener(eventType, () => {
-                // Blur page elements
-                if (eventType === "blur") {
+    // Blur/unBlur page elements on input focus
+    ["focus", "blur"].forEach((eventType) => {
+        autoCompleteJS.input.addEventListener(eventType, () => {
+            // Blur page elements
+            if (eventType === "blur") {
                 action("dim");
-                } else if (eventType === "focus") {
+            } else if (eventType === "focus") {
                 // unBlur page elements
                 action("light");
-                }
-            });
+            }
         });
-
-
-    </script>
+    });
+</script>
 {% endblock %}

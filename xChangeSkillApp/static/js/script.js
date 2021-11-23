@@ -14,7 +14,8 @@ var stateObject = {
 	"Australia": {
 		"South Australia": ["Dunstan", "Mitchell"],
 		"Victoria": ["Altona", "Euroa"]
-	}, "Canada": {
+	},
+	"Canada": {
 		"Alberta": ["Acadia", "Bighorn"],
 		"Columbia": ["Washington"]
 	},
@@ -36,6 +37,7 @@ window.onload = function () {
 */
 
 countySel.onchange = function () {
+	try{
 	console.log("here")
 	stateSel.length = 1; // remove all options bar first
 	districtSel.length = 1; // remove all options bar first
@@ -43,6 +45,10 @@ countySel.onchange = function () {
 	for (var state in stateObject[this.innerHTML]) {
 		stateSel.options[stateSel.options.length] = new Option(state, state);
 	}
+}catch{
+	console.error(message)
+}
+
 }
 
 stateSel.onchange = function () {
@@ -142,18 +148,22 @@ function logInValidation() {
 
 	const loginUserNameValue = document.getElementById('userLoginId').innerHTML.trim();
 	const loginPasswordValue = document.getElementById('userLoginPassword').innerHTML.trim();
+	//let anyError = false;
 
 
 	if (loginUserNameValue === '') {
 		document.getElementById('userLogID').innerHTML = "Username cannot be empty";
+		//anyError = true;
 	} else {
 		document.getElementById('userLogID').innerHTML = "";
 	}
 	if (loginPasswordValue === '') {
 		document.getElementById('userLogPass').innerHTML = "Password cannot be empty";
+		//anyError = true;
 	} else {
 		document.getElementById('userLogPass').innerHTML = "";
 	}
+	//return !anyError;
 
 }
 /*
@@ -168,10 +178,11 @@ regForm.addEventListener('submit', e => {
 });*/
 
 $("#refForm").click(function () {
-	regValidation();
+	return regValidation();
 });
 
 function regValidation() {
+	let anyError = false;
 
 	// trim to remove the whitespaces
 	const firstName = document.getElementById('fName').value.trim();
@@ -180,7 +191,7 @@ function regValidation() {
 	const email = document.getElementById('emailAddress').value.trim();
 	const password = document.getElementById('password').value.trim();
 	const c_password = document.getElementById('password2').value.trim();
-	//const genderValue = document.getElementById('gender').value.trim();
+	const genderValue = document.getElementById('gender').value.trim();
 	const country = document.getElementById('countySel').value.trim();
 	const state = document.getElementById('stateSel').value.trim();
 
@@ -194,153 +205,198 @@ function regValidation() {
 	const dobValue = document.getElementById('dateOfBirth').value.trim();
 
 	const radioChecked = document.getElementById("dot-1").checked || document.getElementById("dot-2").checked;
+	
+		try {
+		if (radioChecked) {
 
-	if (radioChecked) {
+		} else {
+			document.getElementById("genderSpan").innerHTML = "Select a gender";
+			anyError = true;
+		}
 
-	} else {
-		document.getElementById("genderSpan").innerHTML = "Select a gender";
-	}
+		if (firstName === '') {
+			document.getElementById('firstName').innerHTML = "First Name cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('firstName').innerHTML = "";
+		}
 
-	if (firstName === '') {
-		document.getElementById('firstName').innerHTML = "First Name cannot be blank";
-	} else {
-		document.getElementById('firstName').innerHTML = "";
-	}
+		if (lastName === '') {
+			document.getElementById('lastName').innerHTML = "Last Name cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('lastName').innerHTML = "";
+		}
 
-	if (lastName === '') {
-		document.getElementById('lastName').innerHTML = "Last Name cannot be blank";
-	} else {
-		document.getElementById('lastName').innerHTML = "";
-	}
+		if (username === '') {
+			document.getElementById('username').innerHTML = "Username cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('username').innerHTML = "";
+		}
 
-	if (username === '') {
-		document.getElementById('username').innerHTML = "Username cannot be blank";
-	} else {
-		document.getElementById('username').innerHTML = "";
-	}
+		if (username !== "") {
+			if (password.length > 8) {
+				document.getElementById('pass1').innerHTML = "Username must contain at most 8 characters";
+				anyError = true;
+			} else {
+				document.getElementById('pass1').innerHTML = "";
+			}
+		}
+		if (email === '') {
+			document.getElementById('emailId').innerHTML = "Email cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('emailId').innerHTML = "";
+		}
 
-	if (username !== "") {
-		if (passwordinnerHTML.length > 8) {
-			document.getElementById('pass1').innerHTML = "Username must contain at most 8 characters";
+		if (password === '') {
+			document.getElementById('pass1').innerHTML = "Password cannot be blank";
+			anyError = true;
 		} else {
 			document.getElementById('pass1').innerHTML = "";
 		}
-	}
-	if (email === '') {
-		document.getElementById('emailId').innerHTML = "Email cannot be blank";
-	} else {
-		document.getElementById('emailId').innerHTML = "";
-	}
-
-	if (password === '') {
-		document.getElementById('pass1').innerHTML = "Password cannot be blank";
-	} else {
-		document.getElementById('pass1').innerHTML = "";
-	}
 
 
-	if (c_password === '') {
-		document.getElementById('pass2').innerHTML = "Please re-enter the password";
-	} else {
-		document.getElementById('pass2').innerHTML = "";
-	}
-	if (password !== "") {
-		if (password.length > 8) {
-			document.getElementById('pass1').innerHTML = "Password must contain at most 8 characters";
+		if (c_password === '') {
+			document.getElementById('pass2').innerHTML = "Please re-enter the password";
+			anyError = true;
 		} else {
-			document.getElementById('pass1').innerHTML = "";
+			document.getElementById('pass2').innerHTML = "";
 		}
-	}
-	if (password !== "") {
-		if (passwordinnerHTML.search(/[0-9]/) == -1) {
-			document.getElementById('pass1').innerHTML = "Password must contain at least one number (0-9)";
+		if (password !== "") {
+			if (password.length > 8) {
+				document.getElementById('pass1').innerHTML = "Password must contain at most 8 characters";
+				anyError = true;
+			} else {
+				document.getElementById('pass1').innerHTML = "";
+			}
+		}
+		if (password !== "") {
+			if (password.search(/[0-9]/) == -1) {
+				document.getElementById('pass1').innerHTML = "Password must contain at least one number (0-9)";
+				anyError = true;
+			} else {
+				document.getElementById('pass1').innerHTML = "";
+			}
+		}
+		if (password !== "") {
+			if (password.search(/[a-z]/) == -1) {
+				document.getElementById('pass1').innerHTML = "password must contain at least one lowercase letter (a-z)";
+				anyError = true;
+			} else {
+				document.getElementById('pass1').innerHTML = "";
+			}
+		}
+		if (password !== "") {
+			if (password.search(/[A-Z]/) == -1) {
+				document.getElementById('pass1').innerHTML = "Password must contain at least one uppercase letter (A-Z)";
+				anyError = true;
+			} else {
+				document.getElementById('pass1').innerHTML = "";
+			}
+		}
+
+		if (c_password === '') {
+			document.getElementById('pass2').innerHTML = "Confirm password cannot be blank";
+			anyError = true;
+		} else if (password !== c_password) {
+			document.getElementById('pass2').innerHTML = "Password and confirm password does not match";
+			anyError = true;
 		} else {
-			document.getElementById('pass1').innerHTML = "";
+			document.getElementById('pass2').innerHTML = "";
 		}
-	}
-	if (password !== "") {
-		if (password.search(/[a-z]/) == -1) {
-			document.getElementById('pass1').innerHTML = "password must contain at least one lowercase letter (a-z)";
+
+		if (streetAddress === '') {
+			document.getElementById('streetAdd').innerHTML = "Street Address cannot be blank";
+			anyError = true;
 		} else {
-			document.getElementById('pass1').innerHTML = "";
+			document.getElementById('streetAdd').innerHTML = "";
 		}
-	}
-	if (password !== "") {
-		if (password.search(/[A-Z]/) == -1) {
-			document.getElementById('pass1').innerHTML = "Password must contain at least one uppercase letter (A-Z)";
+		if (country === '') {
+			document.getElementById('co').innerHTML = "Country cannot be blank";
+			anyError = true;
 		} else {
-			document.getElementById('pass1').innerHTML = "";
+			document.getElementById('co').innerHTML = "";
 		}
-	}
 
-	if (c_password === '') {
-		document.getElementById('pass2').innerHTML = "Confirm password cannot be blank";
-	} else if (password !== c_password) {
-		document.getElementById('pass2').innerHTML = "Password and confirm password does not match";
-	} else {
-		document.getElementById('pass2').innerHTML = "";
-	}
+		if (state === '') {
+			document.getElementById('stateName').innerHTML = "State cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('stateName').innerHTML = "";
+		}
 
-	if (streetAddress === '') {
-		document.getElementById('streetAdd').innerHTML = "Street Address cannot be blank";
-	} else {
-		document.getElementById('streetAdd').innerHTML = "";
-	}
-	if (country === '') {
-		document.getElementById('co').innerHTML = "Country cannot be blank";
-	} else {
-		document.getElementById('co').innerHTML = "";
-	}
+		if (cityName === '') {
+			document.getElementById('city').innerHTML = "City cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('city').innerHTML = "";
+		}
 
-	if (state === '') {
-		document.getElementById('stateName').innerHTML = "State cannot be blank";
-	} else {
-		document.getElementById('stateName').innerHTML = "";
-	}
+		if (zipCodeValue === '') {
+			document.getElementById('zip').innerHTML = "Zip Code cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('zip').innerHTML = "";
+		}
 
-	if (cityName === '') {
-		document.getElementById('city').innerHTML = "City cannot be blank";
-	} else {
-		document.getElementById('city').innerHTML = "";
-	}
-
-	if (zipCodeValue === '') {
-		document.getElementById('zip').innerHTML = "Zip Code cannot be blank";
-	} else {
-		document.getElementById('zip').innerHTML = "";
-	}
-
-	if (phoneNumberValue === '') {
-		document.getElementById('phone').innerHTML = "Phone Number cannot be blank";
-	} else {
-		document.getElementById('phone').innerHTML = "";
-	}
-	if (phoneNumberValue !== '') {
-		if (phoneNumberValue.length < 10) {
-			document.getElementById('phone').innerHTML = "Phone Number cannot contain less than 10 digits";
+		if (phoneNumberValue === '') {
+			document.getElementById('phone').innerHTML = "Phone Number cannot be blank";
+			anyError = true;
 		} else {
 			document.getElementById('phone').innerHTML = "";
 		}
-	}
-	if (phoneNumberValue !== '') {
-		if (phoneNumberValue.length > 10) {
-			document.getElementById('phone').innerHTML = "Phone Number cannot contain more than 10 digits";
-		} else {
-			document.getElementById('phone').innerHTML = "";
+		if (phoneNumberValue !== '') {
+			if (phoneNumberValue.length < 10) {
+				document.getElementById('phone').innerHTML = "Phone Number cannot contain less than 10 digits";
+				anyError = true;
+			} else {
+				document.getElementById('phone').innerHTML = "";
+			}
 		}
-	}
-	if (phoneNumberValue !== '') {
-		if (isNaN(phoneNumberValue)) {
-			document.getElementById('phone').innerHTML = "Enter digits only not characters";
-		} else {
-			document.getElementById('phone').innerHTML = "";
+		if (phoneNumberValue !== '') {
+			if (phoneNumberValue.length > 10) {
+				document.getElementById('phone').innerHTML = "Phone Number cannot contain more than 10 digits";
+				anyError = true;
+			} else {
+				document.getElementById('phone').innerHTML = "";
+			}
 		}
-	}
+		if (phoneNumberValue !== '') {
+			if (isNaN(phoneNumberValue)) {
+				document.getElementById('phone').innerHTML = "Enter digits only not characters";
+				anyError = true;
+			} else {
+				document.getElementById('phone').innerHTML = "";
+			}
+		}
 
-	if (dobValue === '') {
-		document.getElementById('dob').innerHTML = "DOB value cannot be blank";
-	} else {
-		document.getElementById('dob').innerHTML = "";
+		if (dobValue === '') {
+			document.getElementById('dob').innerHTML = "DOB value cannot be blank";
+			anyError = true;
+		} else {
+			document.getElementById('dob').innerHTML = "";
+		}
+		console.log(anyError); 
+		if(!anyError){
+			alert('Form Succesfully Submitted');
+		}
+		/*if(!anyError){
+			var v = document.getElementById("register");
+			var log = document.getElementById("loginForm");
+			var hideShow = document.getElementById("hideShow");
+			console.log("done1"); 
+			hideShow.style.display = "block";
+			v.style.display = "none";
+			log.style.display = "block";
+			console.log("done2"); 
+			alert('Form Succesfully Submitted');
+			
+		}*/
+	}catch{
+		console.error(message)
 	}
-	console.log("done");
+	
+	return !anyError;
 }

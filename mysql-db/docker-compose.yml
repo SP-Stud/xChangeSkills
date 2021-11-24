@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mysql-docker:
+    image: mysql/mysql-server:latest
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: xchangeSkills
+    ports:
+      - "3309:3306"
+
+  adminer:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql-docker
+    ports:
+      - "8080:8080"

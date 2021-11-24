@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-section" style=" margin-top:150px;margin-bottom:50px;overflow: scroll; ">
+    <h1>Skill List Page</h1>
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+    <h3>User Skill List:</h3>
+    <div >
+        <ul id="dynamic-list">
+            {% for x in skillList %}
+                <li id="{{ x.skill }}" class="skillItems">{{ x.skill }}</li>
+            {% endfor %}
+        </ul>
+        <input type="text" id="candidate"/>
+        <button id="addItemButton" onclick="addItem(1)">add item</button>
+        <button id="removeItemButton" onclick="removeItem(1)">remove item</button>
+    </div>
+    <br>
+    <h3>User Skill Wish List:</h3>
+    <div >
+        <ul id="dynamic-list2">
+            {% for x in skillWishList %}
+                <li id="{{ x.skill }}" class="skillItems">{{ x.skill }}</li>
+            {% endfor %}
+        </ul>
+        <input type="text" id="candidate2"/>
+        <button id="addItemButton2" onclick="addItem(0)">add item</button>
+        <button id="removeItemButton2" onclick="removeItem(0)">remove item</button>
+    </div>
+</div>
+    <script>
+        // document.getElementById("addItemButton").addEventListener("click", addItem(1));
+        // document.getElementById("removeItemButton").addEventListener("click", removeItem(1));
+        // document.getElementById("addItemButton2").addEventListener("click", addItem(0));
+        // document.getElementById("removeItemButton2").addEventListener("click", removeItem(0));
+
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": '{{csrf_token}}' }
+        });
+
+        function addItem(flag){
+            console.log("call");
+            if(flag) {
+                var ul = document.getElementById("dynamic-list");
+                var candidate = document.getElementById("candidate");
+                var item = document.getElementById(candidate.value);
+                if(item!=null) {
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'post-skill' %}",
+                    cache       : false,
+                    contentType : false,
+                    processData : false,
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({ 
+                        'skill' : candidate.value
+                    }),
+                    dataType: 'json',
+                    success: function(data) {
+                        // var linkData = JSON.parse(data);
+                        var li = document.createElement("li");
+                        li.setAttribute('id',candidate.value);
+                        li.setAttribute('class', "skillItems")
+                        li.appendChild(document.createTextNode(candidate.value));
+                        ul.appendChild(li);
+                        candidate.value = '';
+                    }
+                });
+
+            } else {
+                var ul = document.getElementById("dynamic-list2");
+                var candidate = document.getElementById("candidate2");
+                var item = document.getElementById(candidate.value);
+                if(item!=null) {
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'post-wish-skill' %}",
+                    cache       : false,
+                    contentType : false,
+                    processData : false,
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({ 
+                        'skill' : candidate.value
+                    }),
+                    dataType: 'json',
+                    success: function(data) {
+                        // console.log("succ");
+                        // var linkData = JSON.parse(data);
+                        var li = document.createElement("li");
+                        li.setAttribute('id',candidate.value);
+                        li.setAttribute('class', "skillItems")
+                        li.appendChild(document.createTextNode(candidate.value));
+                        ul.appendChild(li);
+                        candidate.value = '';
+                    }
+                });
+            }
+        }
+
+        function removeItem(flag){
+            // console.log("why");
+            if(flag) {
+                var ul = document.getElementById("dynamic-list");
+                var candidate = document.getElementById("candidate");
+
+                var item = document.getElementById(candidate.value);
+                if(item==null) {
+                    return;
+                }
+                
+                $.ajax({
+                    type: "DELETE",
+                    url: "{% url 'delete-skill' %}",
+                    cache       : false,
+                    contentType : false,
+                    processData : false,
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({ 
+                        'skill' : candidate.value
+                    }),
+                    dataType: 'json',
+                    success: function(data) {
+                        // var linkData = JSON.parse(data);
+                        ul.removeChild(item);
+                        candidate.value = '';
+                    }
+                    
+                });
+            } else {
+                var ul = document.getElementById("dynamic-list2");
+                var candidate = document.getElementById("candidate2");
+
+                var item = document.getElementById(candidate.value);
+                if(item==null) {
+                    return;
+                }
+                
+                $.ajax({
+                    type: "DELETE",
+                    url: "{% url 'delete-wish-skill' %}",
+                    cache       : false,
+                    contentType : false,
+                    processData : false,
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({ 
+                        'skill' : candidate.value
+                    }),
+                    dataType: 'json',
+                    success: function(data) {
+                        // var linkData = JSON.parse(data);
+                        ul.removeChild(item);
+                        candidate.value = '';
+                    }
+                    
+                });
+
+            }
+        }
+    </script>
+    
+{% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="content-section" style=" margin-top:150px;margin-bottom:50px;overflow: scroll; ">
-    <h1>Skill List Page</h1>
+    <h1>User Skills Page</h1>
     <div class="media">
         <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
+            <h2 class="account-heading" style="text-align:left">{{ user.username }}</h2>
             <p class="text-secondary">{{ user.email }}</p>
         </div>
     </div>
-    <h3>User Skill List:</h3>
+    <h3>Skill List:</h3>
     <div >
         <ul id="dynamic-list">
             {% for x in skillList %}
@@ -20,7 +20,7 @@
         <button id="removeItemButton" onclick="removeItem(1)">remove item</button>
     </div>
     <br>
-    <h3>User Skill Wish List:</h3>
+    <h3>Wish Skill List:</h3>
     <div >
         <ul id="dynamic-list2">
             {% for x in skillWishList %}

@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'xchangeSkills', 
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'HOST': '0.0.0.0',
+        'PORT': '3309',
     }
 }
 

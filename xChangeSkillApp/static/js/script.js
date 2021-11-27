@@ -191,7 +191,7 @@ function regValidation() {
 	const email = document.getElementById('emailAddress').value.trim();
 	const password = document.getElementById('password').value.trim();
 	const c_password = document.getElementById('password2').value.trim();
-	const genderValue = document.getElementById('gender').value.trim();
+	//const genderValue = document.getElementsByName('gender').value();
 	const country = document.getElementById('countySel').value.trim();
 	const state = document.getElementById('stateSel').value.trim();
 
@@ -205,7 +205,7 @@ function regValidation() {
 	const dobValue = document.getElementById('dateOfBirth').value.trim();
 
 	const radioChecked = document.getElementById("dot-1").checked || document.getElementById("dot-2").checked;
-	
+	console.log(anyError)
 		try {
 		if (radioChecked) {
 
@@ -223,7 +223,7 @@ function regValidation() {
 
 		if (lastName === '') {
 			document.getElementById('lastName').innerHTML = "Last Name cannot be blank";
-			anyError = true;
+			anyError = true; 
 		} else {
 			document.getElementById('lastName').innerHTML = "";
 		}
@@ -236,11 +236,11 @@ function regValidation() {
 		}
 
 		if (username !== "") {
-			if (password.length > 8) {
-				document.getElementById('pass1').innerHTML = "Username must contain at most 8 characters";
+			if (username.length > 6) {
+				document.getElementById('username').innerHTML = "Username must contain at most 8 characters";
 				anyError = true;
 			} else {
-				document.getElementById('pass1').innerHTML = "";
+				document.getElementById('username').innerHTML = "";
 			}
 		}
 		if (email === '') {
@@ -253,6 +253,7 @@ function regValidation() {
 		if (password === '') {
 			document.getElementById('pass1').innerHTML = "Password cannot be blank";
 			anyError = true;
+			console.log("pwd");
 		} else {
 			document.getElementById('pass1').innerHTML = "";
 		}
@@ -261,13 +262,15 @@ function regValidation() {
 		if (c_password === '') {
 			document.getElementById('pass2').innerHTML = "Please re-enter the password";
 			anyError = true;
+			console.log("cpwd");
 		} else {
 			document.getElementById('pass2').innerHTML = "";
 		}
 		if (password !== "") {
-			if (password.length > 8) {
+			if (password.length < 8) {
 				document.getElementById('pass1').innerHTML = "Password must contain at most 8 characters";
 				anyError = true;
+				console.log("pwdl");
 			} else {
 				document.getElementById('pass1').innerHTML = "";
 			}
@@ -276,6 +279,7 @@ function regValidation() {
 			if (password.search(/[0-9]/) == -1) {
 				document.getElementById('pass1').innerHTML = "Password must contain at least one number (0-9)";
 				anyError = true;
+				console.log("pwdnu");
 			} else {
 				document.getElementById('pass1').innerHTML = "";
 			}
@@ -284,6 +288,7 @@ function regValidation() {
 			if (password.search(/[a-z]/) == -1) {
 				document.getElementById('pass1').innerHTML = "password must contain at least one lowercase letter (a-z)";
 				anyError = true;
+				console.log("pwdch");
 			} else {
 				document.getElementById('pass1').innerHTML = "";
 			}
@@ -292,6 +297,7 @@ function regValidation() {
 			if (password.search(/[A-Z]/) == -1) {
 				document.getElementById('pass1').innerHTML = "Password must contain at least one uppercase letter (A-Z)";
 				anyError = true;
+				console.log("pwdchcap");
 			} else {
 				document.getElementById('pass1').innerHTML = "";
 			}
@@ -300,9 +306,11 @@ function regValidation() {
 		if (c_password === '') {
 			document.getElementById('pass2').innerHTML = "Confirm password cannot be blank";
 			anyError = true;
+			console.log("cpwdb");
 		} else if (password !== c_password) {
 			document.getElementById('pass2').innerHTML = "Password and confirm password does not match";
 			anyError = true;
+			console.log("pwdchM");
 		} else {
 			document.getElementById('pass2').innerHTML = "";
 		}
@@ -310,12 +318,14 @@ function regValidation() {
 		if (streetAddress === '') {
 			document.getElementById('streetAdd').innerHTML = "Street Address cannot be blank";
 			anyError = true;
+			console.log("st");
 		} else {
 			document.getElementById('streetAdd').innerHTML = "";
 		}
 		if (country === '') {
 			document.getElementById('co').innerHTML = "Country cannot be blank";
 			anyError = true;
+			console.log("co");
 		} else {
 			document.getElementById('co').innerHTML = "";
 		}
@@ -323,6 +333,7 @@ function regValidation() {
 		if (state === '') {
 			document.getElementById('stateName').innerHTML = "State cannot be blank";
 			anyError = true;
+			console.log("state");
 		} else {
 			document.getElementById('stateName').innerHTML = "";
 		}
@@ -330,6 +341,7 @@ function regValidation() {
 		if (cityName === '') {
 			document.getElementById('city').innerHTML = "City cannot be blank";
 			anyError = true;
+			console.log("city");
 		} else {
 			document.getElementById('city').innerHTML = "";
 		}
@@ -337,6 +349,7 @@ function regValidation() {
 		if (zipCodeValue === '') {
 			document.getElementById('zip').innerHTML = "Zip Code cannot be blank";
 			anyError = true;
+			console.log("zip");
 		} else {
 			document.getElementById('zip').innerHTML = "";
 		}
@@ -344,13 +357,15 @@ function regValidation() {
 		if (phoneNumberValue === '') {
 			document.getElementById('phone').innerHTML = "Phone Number cannot be blank";
 			anyError = true;
+			console.log("ph");
 		} else {
 			document.getElementById('phone').innerHTML = "";
 		}
-		if (phoneNumberValue !== '') {
+	/*	if (phoneNumberValue !== '') {
 			if (phoneNumberValue.length < 10) {
 				document.getElementById('phone').innerHTML = "Phone Number cannot contain less than 10 digits";
 				anyError = true;
+				console.log("phless");
 			} else {
 				document.getElementById('phone').innerHTML = "";
 			}
@@ -359,14 +374,16 @@ function regValidation() {
 			if (phoneNumberValue.length > 10) {
 				document.getElementById('phone').innerHTML = "Phone Number cannot contain more than 10 digits";
 				anyError = true;
+				console.log("phm");
 			} else {
 				document.getElementById('phone').innerHTML = "";
 			}
-		}
+		} */
 		if (phoneNumberValue !== '') {
 			if (isNaN(phoneNumberValue)) {
 				document.getElementById('phone').innerHTML = "Enter digits only not characters";
 				anyError = true;
+				console.log("phch");
 			} else {
 				document.getElementById('phone').innerHTML = "";
 			}
@@ -375,6 +392,7 @@ function regValidation() {
 		if (dobValue === '') {
 			document.getElementById('dob').innerHTML = "DOB value cannot be blank";
 			anyError = true;
+			console.log("dob");
 		} else {
 			document.getElementById('dob').innerHTML = "";
 		}
@@ -394,8 +412,9 @@ function regValidation() {
 			alert('Form Succesfully Submitted');
 			
 		}*/
-	}catch{
+	}catch(message){
 		console.error(message)
+		//return false;
 	}
 	
 	return !anyError;
